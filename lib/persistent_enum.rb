@@ -76,7 +76,7 @@ module PersistentEnum
       # Set each value as a constant on this class. If reloading, only update if
       # it's changed.
       to_constant_name = ->(s){
-        value = s.strip.gsub(/[^\w\s-]/, '').underscore
+        value = s.strip.gsub(/[^\w\s-]/, '_').underscore
         return nil if value.blank?
         value.gsub!(/\s+/, '_')
         value.gsub!(/_{2,}/, '_')

@@ -111,6 +111,25 @@ class PersistentEnumTest < ActiveSupport::TestCase
     destroy_test_model(:test_requires_constant)
   end
 
+  def test_constant_naming
+    test_constants = {
+      "CamelCase"             => "CAMEL_CASE",
+      :Symbolic               => "SYMBOLIC",
+      "with.punctuation"      => "WITH_PUNCTUATION",
+      "multiple_.underscores" => "MULTIPLE_UNDERSCORES"
+    }
+
+    create_test_model(:test_constant_name, ->(t){ t.string :name }) do
+      PersistentEnum.cache_constants(self, test_constants.keys)
+    end
+
+    test_constants.each do |k, v|
+      assert_present(TestConstantName.const_get(v))
+    end
+
+    destroy_test_model(:test_constant_name)
+  end
+
   def test_enum_immutable
     assert_raises(ActiveRecord::ReadOnlyRecord) do
       TestPersistentEnum.create(name: "foo")
