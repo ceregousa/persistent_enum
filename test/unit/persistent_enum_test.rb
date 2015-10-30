@@ -101,10 +101,10 @@ class PersistentEnumTest < ActiveSupport::TestCase
 
     CONSTANTS.each do |c|
       cached = TestRequiresConstant.const_get(c.upcase)
-      assert_present(cached)
+      assert(cached.present?)
       assert_equal(c.to_s, cached.name)
       stored = TestRequiresConstant.where(name: c.to_s).first
-      assert_present(stored)
+      assert(stored.present?)
       assert_equal(cached, stored)
     end
 
@@ -124,7 +124,7 @@ class PersistentEnumTest < ActiveSupport::TestCase
     end
 
     test_constants.each do |k, v|
-      assert_present(TestConstantName.const_get(v))
+      assert(TestConstantName.const_get(v).present?)
     end
 
     destroy_test_model(:test_constant_name)
