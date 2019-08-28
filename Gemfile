@@ -4,6 +4,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'byebug'
+  gem 'byebug', require: false
   gem 'sqlite3'
 end
